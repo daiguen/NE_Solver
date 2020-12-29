@@ -22,6 +22,6 @@ void NE_Solver::run(void) {
 	vector<NE_Throw*>& throw_ = dom.get_throw_list();
 
 	for (throw_it = throw_.begin(); throw_it != throw_.end(); throw_it++) {
-		(**throw_it).calculate();
+		(**throw_it).calculate(dom.get_parameters());
 	}
 }

@@ -15,49 +15,35 @@ void NE_Input_Reader::read(NE_Solver& solver) {
 
 	if (ReadFile.is_open()) {
 		string str, key;
-		vector<string> str_vec, temp_str_vec;
-		
-		bool flag(false);
-		bool read_flag(false);
-		while (!ReadFile.eof()) {			
+		vector<string> str_vec, prev_str_vec;
+
+		int count = 0;
+		while (!ReadFile.eof()) {
 			str = "";
 			getline(ReadFile, str);
-			temp_str_vec = NE_Utils::parsing_string(str, "\t");
+			str_vec = NE_Utils::parsing_string(str, "\t");
 			// empty line
-			if (temp_str_vec.empty()) continue;
-			
-			key = temp_str_vec[0];
-			if (key == "DOMAIN" || key == "THROW") {
-				flag = true;
+			if (str_vec.empty()) continue;
+
+			if (count == 0) {
+				prev_str_vec = str_vec;
+				count++;
 			}
 			else {
-				if (!key.empty() && flag) {
-					flag = false;
-					read_flag = true;
-				}
-			}
-
-			if (flag) {
+				key = str_vec[0];
 				if (key.empty()) {
-					str_vec.insert(str_vec.end(), temp_str_vec.begin() + 1, temp_str_vec.end());
+					prev_str_vec.insert(prev_str_vec.end(), str_vec.begin() + 1, str_vec.end());
 				}
 				else {
-					str_vec.insert(str_vec.end(), temp_str_vec.begin(), temp_str_vec.end());
+					read_(solver, prev_str_vec);
+					prev_str_vec = str_vec;
 				}
-			}
-			else {
-				if (read_flag) {
-					read_(solver, str_vec);
-					str_vec.clear();
-					read_flag = false;
-				}
-				read_(solver, temp_str_vec);				
+				count++;
 			}
 		}
+		read_(solver, prev_str_vec);
 		ReadFile.close();
 	}
-
-
 }
 
 void NE_Input_Reader::read_(NE_Solver& solver, vector<string>& str_vec) {
@@ -77,6 +63,7 @@ void NE_Input_Reader::read_(NE_Solver& solver, vector<string>& str_vec) {
 		ne_param->set_id(stoi(str_vec[1]));
 		ne_param->set_rpm(stod(str_vec[2]));
 		ne_param->set_angle_step(stod(str_vec[3]));
+		ne_param->set_type(str_vec[4]);
 		solver.add_parameter(ne_param);
 	}
 	else if (key == "THROW") {

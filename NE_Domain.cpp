@@ -6,6 +6,7 @@ void NE_Domain::init(void) {
 	set_id(0);
 	set_param_id(0);
 	_throw_id.clear();
+	_param = NULL;
 	_throw_list.clear();
 }
 
@@ -24,5 +25,16 @@ void NE_Domain::set(NE_Solver& solver) {
 				break;
 			}
 		}		
+	}
+
+	// parameters
+	int param_id = get_param_id();
+	vector<NE_Parameters*>::iterator parameters_it;
+	vector<NE_Parameters*>& parameters_ = solver.get_parameters_list();
+	for (parameters_it = parameters_.begin(); parameters_it != parameters_.end(); parameters_it++) {
+		if (param_id == (**parameters_it).get_id()) {			
+			add_parameters(*parameters_it);
+			break;
+		}
 	}
 }

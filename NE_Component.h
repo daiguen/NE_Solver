@@ -207,6 +207,7 @@ class NE_Parameters : public NE_Component {
 private:
 	double _rpm;
 	double _ang_step;
+	string _type;
 
 public:
 	NE_Parameters() {		
@@ -218,10 +219,12 @@ public:
 	// set functions
 	void set_rpm(double rpm) { _rpm = rpm; }
 	void set_angle_step(double ang_step) { _ang_step = ang_step; }
+	void set_type(string type) { _type = type; }
 
 	// get functions
 	double get_rpm(void) { return _rpm; }
 	double get_angle_step(void) { return _ang_step; }
+	string get_type(void) { return _type; }
 
 	// virtual functions
 	void init(void);
@@ -306,7 +309,7 @@ public:
 	void init(void);
 
 	// non-virtual functions	
-	void calculate(void);	
+	void calculate(NE_Parameters& param);
 	void add_mb(NE_MB* mb) { _mb_list.push_back(mb); }
 	void add_web(NE_Web* web) { _web_list.push_back(web); }
 	void add_cw(NE_CW* cw) { _cw_list.push_back(cw); }

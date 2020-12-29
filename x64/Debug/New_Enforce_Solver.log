@@ -1,2 +1,5 @@
-﻿  NE_Solver.cpp
+﻿  NE_Domain.cpp
+  NE_Input_Reader.cpp
+  NE_Solver.cpp
+  Generating Code...
   New_Enforce_Solver.vcxproj -> D:\Project\2020\NEW_ENFORCE\VS\New_Enforce_Solver\x64\Debug\New_Enforce_Solver.exe

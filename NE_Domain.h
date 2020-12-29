@@ -7,12 +7,15 @@ using namespace std;
 
 class NE_Solver;
 class NE_Throw;
+class NE_Parameters;
+
 class NE_Domain {
 private:
 	int _id;
 	int _param_id;
 	vector<int> _throw_id;
 
+	NE_Parameters* _param;
 	vector<NE_Throw*> _throw_list;
 
 public:
@@ -34,13 +37,12 @@ public:
 	int get_param_id(void) { return _param_id; }
 	vector<int>& get_throw_id(void) { return _throw_id; }
 	vector<NE_Throw*>& get_throw_list(void) { return _throw_list; }
+	NE_Parameters& get_parameters(void) { return *_param; }	
 
 	// non-virtual functions
 	void init(void);
 	void add_throw(NE_Throw* th) { _throw_list.push_back(th); }
-
-
-
+	void add_parameters(NE_Parameters* param) { _param = param; }
 };
 
 
