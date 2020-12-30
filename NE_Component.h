@@ -61,6 +61,7 @@ public:
 class NE_Conrod : public NE_Component {
 private:
 	double _mass;
+	double _inertia;
 	double _length;
 	double _cog;
 
@@ -73,11 +74,13 @@ public:
 	}
 	// set functions
 	void set_mass(double mass) { _mass = mass; }
+	void set_inertia(double inertia) { _inertia = inertia; }
 	void set_length(double length) { _length = length; }
 	void set_cog(double cog) { _cog = cog; }
 
 	// get functions
 	double get_mass(void) { return _mass; }
+	double get_inertia(void) { return _inertia; }
 	double get_length(void) { return _length; }
 	double get_cog(void) { return _cog; }
 
@@ -234,7 +237,9 @@ public:
 
 class NE_Cylinder : public NE_Component {
 private:
+	double _bank_angle;
 	double _axpos;
+	double _firing_angle;
 	int _piston_id;
 	int _conrod_id;
 	int _pressure_id;
@@ -252,7 +257,9 @@ public:
 
 	}
 	// set functions
+	void set_bank_angle(double bank_angle) { _bank_angle = bank_angle; }	
 	void set_axpos(double axpos) { _axpos = axpos; }
+	void set_firing_angle(double firing_angle) { _firing_angle = firing_angle; }
 	void set_piston_id(int id) { _piston_id = id; }
 	void set_conrod_id(int id) { _conrod_id = id; }
 	void set_pressure_id(int id) { _pressure_id = id; }
@@ -260,11 +267,16 @@ public:
 	void set(NE_Solver& solver);
 
 	// get functions
+	double get_bank_angle(void) { return _bank_angle; }
 	double get_axpos(void) { return _axpos; }
+	double get_firing_angle(void) { return _firing_angle; }
 	int get_piston_id(void) { return _piston_id; }
 	int get_conrod_id(void) { return _conrod_id; }
 	int get_pressure_id(void) { return  _pressure_id; }
 	double get_crank_pin_mass(void) { return _crank_pin_mass; }
+	NE_Piston& get_piston(void) { return *_piston; }
+	NE_Conrod& get_conrod(void) { return *_conrod; }
+	NE_Pressure& get_pressure(void) { return *_pressure; }
 
 	// virtual functions
 	void init(void);
@@ -304,6 +316,10 @@ public:
 	int* get_web_id(void) { return _web_id; }
 	int* get_cw_id(void) { return _cw_id; }
 	vector<int>& get_cyl_id(void) { return _cyl_id; }
+	vector<NE_MB*>& get_mb_list(void) { return _mb_list; }
+	vector<NE_Web*>& get_web_list(void) { return _web_list; }
+	vector<NE_CW*>& get_cw_list(void) { return _cw_list; }
+	vector<NE_Cylinder*>& get_cyl_list(void) { return _cyl_list; }
 
 	// virtual functions
 	void init(void);

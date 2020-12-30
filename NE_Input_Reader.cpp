@@ -81,11 +81,13 @@ void NE_Input_Reader::read_(NE_Solver& solver, vector<string>& str_vec) {
 	else if (key == "CYLINDER") {
 		NE_Cylinder* ne_cyl = new NE_Cylinder;
 		ne_cyl->set_id(stoi(str_vec[1]));
-		ne_cyl->set_axpos(stod(str_vec[2]));
-		ne_cyl->set_piston_id(stoi(str_vec[3]));
-		ne_cyl->set_conrod_id(stoi(str_vec[4]));
-		ne_cyl->set_pressure_id(stoi(str_vec[5]));
-		ne_cyl->set_crank_pin_mass(stod(str_vec[6]));
+		ne_cyl->set_bank_angle(stod(str_vec[2]));
+		ne_cyl->set_axpos(stod(str_vec[3]));
+		ne_cyl->set_firing_angle(stod(str_vec[4]));
+		ne_cyl->set_piston_id(stoi(str_vec[5]));
+		ne_cyl->set_conrod_id(stoi(str_vec[6]));
+		ne_cyl->set_pressure_id(stoi(str_vec[7]));
+		ne_cyl->set_crank_pin_mass(stod(str_vec[8]));
 		solver.add_cylinder(ne_cyl);
 	}
 	else if (key == "PISTON") {
@@ -98,8 +100,9 @@ void NE_Input_Reader::read_(NE_Solver& solver, vector<string>& str_vec) {
 		NE_Conrod* ne_conrod = new NE_Conrod;
 		ne_conrod->set_id(stoi(str_vec[1]));
 		ne_conrod->set_mass(stod(str_vec[2]));
-		ne_conrod->set_length(stod(str_vec[3]));
-		ne_conrod->set_cog(stod(str_vec[4]));
+		ne_conrod->set_inertia(stod(str_vec[3]));
+		ne_conrod->set_length(stod(str_vec[4]));
+		ne_conrod->set_cog(stod(str_vec[5]));
 		solver.add_conrod(ne_conrod);
 	}
 	else if (key == "MB") {

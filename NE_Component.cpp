@@ -201,14 +201,43 @@ void NE_Throw::calculate(NE_Parameters& param) {
 	double w = param.get_rpm() * M_PI / 30;
 	double ang_step = param.get_angle_step();
 	int n = 0;
-	if (param.get_type() == "2stroke") {
+	if (param.get_type() == "2-stroke") {
 		n = int(360 / ang_step);
 	}
-	else if (param.get_type() == "4stroke") {
+	else if (param.get_type() == "4-stroke") {
 		n = int(720 / ang_step);
 	}
 	else {
 
 	}
+
+
+	double m1, m2, m3;
+	double i1, i2, i3;
+	
+	vector<NE_Web*>::iterator web_it;
+	vector<NE_Web*>& web_list = get_web_list();
+	for (web_it = web_list.begin(); web_it != web_list.end(); web_it++) {
+
+	}
+	vector<NE_CW*>::iterator cw_it;
+	vector<NE_CW*>& cw_list = get_cw_list();
+	for (cw_it = cw_list.begin(); cw_it != cw_list.end(); cw_it++) {
+
+	}
+
+	vector<NE_Cylinder*>::iterator cyl_it;
+	vector<NE_Cylinder*>& cyl_list = get_cyl_list();
+	for (cyl_it = cyl_list.begin(); cyl_it != cyl_list.end(); cyl_it++) {
+		
+		
+		m2 = (**cyl_it).get_conrod().get_mass();
+		m3 = (**cyl_it).get_piston().get_mass();
+		for (int i = 0; i < n; i++) {
+
+		}
+	}
+	
+	
 
 }

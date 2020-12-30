@@ -1,5 +1,9 @@
-﻿  NE_Domain.cpp
+﻿  NE_Component.cpp
+D:\Project\2020\NEW_ENFORCE\VS\New_Enforce_Solver\NE_Component.cpp(215,9): warning C4101: 'm1': unreferenced local variable
+D:\Project\2020\NEW_ENFORCE\VS\New_Enforce_Solver\NE_Component.cpp(216,17): warning C4101: 'i3': unreferenced local variable
+D:\Project\2020\NEW_ENFORCE\VS\New_Enforce_Solver\NE_Component.cpp(216,13): warning C4101: 'i2': unreferenced local variable
+D:\Project\2020\NEW_ENFORCE\VS\New_Enforce_Solver\NE_Component.cpp(216,9): warning C4101: 'i1': unreferenced local variable
+  NE_Domain.cpp
   NE_Input_Reader.cpp
-  NE_Solver.cpp
   Generating Code...
   New_Enforce_Solver.vcxproj -> D:\Project\2020\NEW_ENFORCE\VS\New_Enforce_Solver\x64\Debug\New_Enforce_Solver.exe
