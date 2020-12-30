@@ -68,6 +68,8 @@ void NE_Pressure::set(void) {
 			vector<string> str_vec;
 			vector<double>& angle = get_angle();
 			vector<double>& pressure = get_pressure();
+			vector<double>& nangle = get_nangle();
+			vector<double>& npressure = get_npressure();
 
 			while (!ReadFile.eof()) {
 				str = "";
@@ -75,7 +77,11 @@ void NE_Pressure::set(void) {
 				str_vec = NE_Utils::parsing_string(str, "\t");
 				angle.push_back(stod(str_vec[0]));
 				pressure.push_back(stod(str_vec[1]));
+				nangle.push_back(-stod(str_vec[0]));
+				npressure.push_back(stod(str_vec[1]));
 			}
+			reverse(npressure.begin(), npressure.end());
+			ReadFile.close();
 		}
 	}
 }
@@ -137,6 +143,7 @@ void NE_Cylinder::set(NE_Solver& solver) {
 
 void NE_Throw::init(void) {
 	set_id(0);
+	_throw_angle = 0.;
 	_mb_id[0] = 0;
 	_mb_id[1] = 0;
 	_web_id[0] = 0;
@@ -144,6 +151,14 @@ void NE_Throw::init(void) {
 	_cw_id[0] = 0;
 	_cw_id[1] = 0;
 	_cyl_id.clear();
+	_mb_list.clear();
+	_web_list.clear();
+	_cw_list.clear();
+	_cyl_list.clear();
+	_radius = 0.;
+	_u.clear();
+	_v.clear();
+	_a.clear();
 }
 
 void NE_Throw::set(NE_Solver& solver) {
@@ -182,12 +197,19 @@ void NE_Throw::set(NE_Solver& solver) {
 				break;
 			}
 		}
+		double r(0.);
 		for (web_it = web_.begin(); web_it != web_.end(); web_it++) {
 			if (wb_[i] == (**web_it).get_id()) {
 				add_web(*web_it);
+				if (r == 0.) continue;
+				if (r != (**web_it).get_radius()) {
+					// diff radius error
+				}
 				break;
 			}
 		}
+		set_radius(r);
+
 		for (counterweight_it = counterweight_.begin(); counterweight_it != counterweight_.end(); counterweight_it++) {
 			if (cw_[i] == (**counterweight_it).get_id()) {
 				add_cw(*counterweight_it);
@@ -210,34 +232,80 @@ void NE_Throw::calculate(NE_Parameters& param) {
 	else {
 
 	}
-
-
-	double m1, m2, m3;
-	double i1, i2, i3;
 	
+	// Crank Total Mass & COG
+	double temp(0.), temp_m(0.);
 	vector<NE_Web*>::iterator web_it;
 	vector<NE_Web*>& web_list = get_web_list();
 	for (web_it = web_list.begin(); web_it != web_list.end(); web_it++) {
-
+		NE_Web& web = (**web_it);
+		temp_m += web.get_mass();
+		temp += (web.get_mass()) * (web.get_cog());
 	}
 	vector<NE_CW*>::iterator cw_it;
 	vector<NE_CW*>& cw_list = get_cw_list();
 	for (cw_it = cw_list.begin(); cw_it != cw_list.end(); cw_it++) {
-
+		NE_CW& cw = (**cw_it);
+		temp_m += cw.get_mass();
+		temp -= (cw.get_mass()) * (cw.get_cog());
 	}
 
+	double throw_angle = get_throw_angle();
+	double m1 = temp_m;
+	double r = temp / temp_m;
+	
 	vector<NE_Cylinder*>::iterator cyl_it;
 	vector<NE_Cylinder*>& cyl_list = get_cyl_list();
-	for (cyl_it = cyl_list.begin(); cyl_it != cyl_list.end(); cyl_it++) {
-		
-		
-		m2 = (**cyl_it).get_conrod().get_mass();
-		m3 = (**cyl_it).get_piston().get_mass();
-		for (int i = 0; i < n; i++) {
-
-		}
+	for (cyl_it = cyl_list.begin(); cyl_it != cyl_list.end(); cyl_it++) {						
+		calculate_((**cyl_it), throw_angle, n, m1, r, w);
 	}
-	
-	
+}
 
+void NE_Throw::calculate_(NE_Cylinder& cyl, double throw_angle, int n, double m1, double r, double w) {
+	double* th1 = new double[n];
+	double* y1 = new double[n];
+	double* z1 = new double[n];
+	double* th2 = new double[n];
+	double* y2 = new double[n];
+	double* z2 = new double[n];
+	double* th3 = new double[n];
+	double* y3 = new double[n];
+	double* z3 = new double[n];
+
+	double* th1_dot = new double[n];
+	double* y1_dot = new double[n];
+	double* z1_dot = new double[n];
+	double* th2_dot = new double[n];
+	double* y2_dot = new double[n];
+	double* z2_dot = new double[n];
+	double* th3_dot = new double[n];
+	double* y3_dot = new double[n];
+	double* z3_dot = new double[n];
+
+	double* th1_2dot = new double[n];
+	double* y1_2dot = new double[n];
+	double* z1_2dot = new double[n];
+	double* th2_2dot = new double[n];
+	double* y2_2dot = new double[n];
+	double* z2_2dot = new double[n];
+	double* th3_2dot = new double[n];
+	double* y3_2dot = new double[n];
+	double* z3_2dot = new double[n];
+	
+	double m2 = cyl.get_conrod().get_mass();
+	double m3 = cyl.get_piston().get_mass();
+	double i2 = cyl.get_conrod().get_inertia();
+	double bank_angle = cyl.get_bank_angle();
+
+	double bb(0.);
+	if (w >= 0.) bb = 1.;
+	else bb = -1.;
+	
+	double R = get_radius() - r;
+	for (int i = 0; i < n; i++) {
+		th1[i] = bb * (i + throw_angle) * M_PI / 180.;
+		y1[i] = cos(th1[i]) * r;
+		z1[i] = sin(th1[i]) * r;
+		//th2[i] = asin((-R / L) * sin(th1[i]));
+	}
 }

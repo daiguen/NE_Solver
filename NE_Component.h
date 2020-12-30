@@ -38,7 +38,7 @@ public:
 class NE_Piston : public NE_Component {
 private:
 	double _mass;
-
+	
 public:
 	NE_Piston() {
 		init();
@@ -48,6 +48,7 @@ public:
 	}
 	// set functions
 	void set_mass(double mass) { _mass = mass; }	
+	void set_u(void) { }
 
 	// get functions
 	double get_mass(void) { return _mass; }
@@ -184,6 +185,9 @@ private:
 	vector<double> _angle;
 	vector<double> _pressure;
 
+	vector<double> _nangle;
+	vector<double> _npressure;
+
 public:
 	NE_Pressure() {
 		init();
@@ -199,6 +203,8 @@ public:
 	string get_path(void) { return _path; }
 	vector<double>& get_angle(void) { return _angle; }
 	vector<double>& get_pressure(void) { return _pressure; }
+	vector<double>& get_nangle(void) { return _nangle; }
+	vector<double>& get_npressure(void) { return _npressure; }
 
 	// virtual functions
 	void init(void);
@@ -286,6 +292,7 @@ public:
 
 class NE_Throw : public NE_Component {
 private:
+	double _throw_angle;
 	int _mb_id[2];
 	int _web_id[2];
 	int _cw_id[2];
@@ -296,22 +303,30 @@ private:
 	vector<NE_CW*> _cw_list;
 	vector<NE_Cylinder*> _cyl_list;
 
+	double _radius;
+
+	vector<double*> _u;
+	vector<double*> _v;
+	vector<double*> _a;
 public:
 	NE_Throw() {
 		init();
 	}
 	~NE_Throw() {
-
+		
 	}
 
 	// set functions
+	void set_throw_angle(double throw_angle) { _throw_angle = throw_angle; }
 	void set_mb_id(int id1, int id2) { _mb_id[0] = id1; _mb_id[1] = id2; }
 	void set_web_id(int id1, int id2) { _web_id[0] = id1; _web_id[1] = id2; }
 	void set_cw_id(int id1, int id2) { _cw_id[0] = id1; _cw_id[1] = id2; }
 	void set_cyl_id(int id) { _cyl_id.push_back(id); }
+	void set_radius(double radius) { _radius = radius; }
 	void set(NE_Solver& solver);
 
 	// get functions
+	double get_throw_angle(void) { return _throw_angle; }
 	int* get_mb_id(void) { return _mb_id; }
 	int* get_web_id(void) { return _web_id; }
 	int* get_cw_id(void) { return _cw_id; }
@@ -320,12 +335,17 @@ public:
 	vector<NE_Web*>& get_web_list(void) { return _web_list; }
 	vector<NE_CW*>& get_cw_list(void) { return _cw_list; }
 	vector<NE_Cylinder*>& get_cyl_list(void) { return _cyl_list; }
+	double get_radius(void) { return _radius; }
+	vector<double*>& get_u(void) { return _u; }
+	vector<double*>& get_v(void) { return _v; }
+	vector<double*>& get_a(void) { return _a; }
 
 	// virtual functions
 	void init(void);
 
 	// non-virtual functions	
 	void calculate(NE_Parameters& param);
+	void calculate_(NE_Cylinder& cyl, double throw_angle, int n, double m1, double r, double w);
 	void add_mb(NE_MB* mb) { _mb_list.push_back(mb); }
 	void add_web(NE_Web* web) { _web_list.push_back(web); }
 	void add_cw(NE_CW* cw) { _cw_list.push_back(cw); }

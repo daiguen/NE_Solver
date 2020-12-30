@@ -69,9 +69,10 @@ void NE_Input_Reader::read_(NE_Solver& solver, vector<string>& str_vec) {
 	else if (key == "THROW") {
 		NE_Throw* ne_throw = new NE_Throw;
 		ne_throw->set_id(stoi(str_vec[1]));
-		ne_throw->set_mb_id(stoi(str_vec[2]), stoi(str_vec[3]));
-		ne_throw->set_web_id(stoi(str_vec[4]), stoi(str_vec[5]));
-		ne_throw->set_cw_id(stoi(str_vec[6]), stoi(str_vec[7]));
+		ne_throw->set_throw_angle(stod(str_vec[2]));
+		ne_throw->set_mb_id(stoi(str_vec[3]), stoi(str_vec[4]));
+		ne_throw->set_web_id(stoi(str_vec[5]), stoi(str_vec[6]));
+		ne_throw->set_cw_id(stoi(str_vec[7]), stoi(str_vec[8]));
 		int n = int(str_vec.size());
 		for (int i = 8; i < n; i++) {
 			ne_throw->set_cyl_id(i);
@@ -82,12 +83,12 @@ void NE_Input_Reader::read_(NE_Solver& solver, vector<string>& str_vec) {
 		NE_Cylinder* ne_cyl = new NE_Cylinder;
 		ne_cyl->set_id(stoi(str_vec[1]));
 		ne_cyl->set_bank_angle(stod(str_vec[2]));
-		ne_cyl->set_axpos(stod(str_vec[3]));
-		ne_cyl->set_firing_angle(stod(str_vec[4]));
-		ne_cyl->set_piston_id(stoi(str_vec[5]));
-		ne_cyl->set_conrod_id(stoi(str_vec[6]));
-		ne_cyl->set_pressure_id(stoi(str_vec[7]));
-		ne_cyl->set_crank_pin_mass(stod(str_vec[8]));
+		ne_cyl->set_firing_angle(stod(str_vec[3]));
+		ne_cyl->set_axpos(stod(str_vec[4]));
+		ne_cyl->set_crank_pin_mass(stod(str_vec[5]));
+		ne_cyl->set_piston_id(stoi(str_vec[6]));
+		ne_cyl->set_conrod_id(stoi(str_vec[7]));
+		ne_cyl->set_pressure_id(stoi(str_vec[8]));		
 		solver.add_cylinder(ne_cyl);
 	}
 	else if (key == "PISTON") {
