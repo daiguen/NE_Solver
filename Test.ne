@@ -122,3 +122,82 @@ CW	16	220	8954.25	502.087	7439.88725
 CW	17	340	9445.75	502.087	7439.88725
 CW	18	340	10104.25	502.087	7439.88725
 PRESSURE	1	D:\Project\2020\NEW_ENFORCE\VS\New_Enforce_Solver\Pressure.txt
+
+clc
+clear all
+close all
+
+r = 250;
+R = 500;
+l = 500;
+L = 1000;
+
+rpm = 100;
+w = rpm * pi /30;
+
+th1 = transpose(linspace(0,360,361)) * pi / 180;
+x1 = r * cos(th1);
+y1 = r * sin(th1);
+
+th2 = asin((-R/L)*sin(th1));
+x2 = R * cos(th1) + l * cos(th2);
+y2 = R * sin(th1) + l * sin(th2);
+
+x3 = x2 + (L-l) * cos(th2);
+y3 = zeros(length(th1),1);
+th3 = zeros(length(th1),1);
+
+data = [x1 y1 180*th1/pi x2 y2 th2 x3 y3 th3];
+
+th1_dot = ones(length(th1),1) * w;
+x1_dot = -r * sin(th1) .* th1_dot;
+y1_dot = r * cos(th1) .* th1_dot;
+
+th2_dot = (-R/L) * cos(th1) .* th1_dot ./ cos(th2);
+x2_dot = -R*sin(th1).*th1_dot + (-l*sin(th2).*th2_dot);
+y2_dot = R*cos(th1) .*th1_dot + l*cos(th2).*th2_dot;
+
+x3_dot = x2_dot + (L-l)*(-sin(th2) .*th2_dot);
+y3_dot = zeros(length(th1),1);
+th3_dot = zeros(length(th1),1);
+
+data2 = [x1_dot y1_dot 180*th1/pi x2_dot y2_dot th2_dot x3_dot y3_dot th3_dot];
+
+th1_2dot = zeros(length(th1),1);
+x1_2dot = -r * cos(th1) .* th1_dot .* th1_dot;
+y1_2dot = -r * sin(th1) .* th1_dot .* th1_dot;
+
+th2_2dot = (sin(th2) .* th2_dot .* th2_dot + (-R/L) * (-sin(th1).*th1_dot.*th1_dot)) ./ cos(th2);
+x2_2dot = -R*cos(th1).*th1_dot.*th1_dot + (-l*sin(th2).*th2_2dot) + (-l*cos(th2).*th2_dot.*th2_dot);
+y2_2dot = -R*sin(th1) .*th1_dot.*th1_dot + (l*cos(th2).*th2_2dot) + (-l*sin(th2).*th2_dot.*th2_dot);
+
+x3_2dot = x2_2dot + (L-l) * (-cos(th2).*th2_dot.*th2_dot-sin(th2).*th2_2dot);
+y3_2dot = zeros(length(th1),1);
+th3_2dot = zeros(length(th1),1);
+
+data3 = [x1_2dot y1_2dot 180*th1/pi x2_2dot y2_2dot th2_2dot x3_2dot y3_2dot th3_2dot];
+
+
+% v = VideoWriter('Test.avi');
+% open(v);
+% 
+% for i=1:length(th1)
+%     plot(x1(i),y1(i),'ko')
+%     grid on
+%     hold on
+%     plot(x2(i),y2(i),'bo')
+%     plot(x3(i),y3(i),'ro')
+%     
+%     xlim([-30 30]);
+%     ylim([-20 30]);
+%     
+%     
+%     
+%     hold off
+% 
+%     frame = getframe(gcf);
+%     writeVideo(v,frame);
+% end
+% 
+% close(v);
+
