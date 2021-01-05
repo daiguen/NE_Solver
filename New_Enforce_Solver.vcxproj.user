@@ -5,11 +5,11 @@
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <LocalDebuggerCommandArguments>-i D:\Project\2020\NEW_ENFORCE\VS\New_Enforce_Solver\Test.ne</LocalDebuggerCommandArguments>
+    <LocalDebuggerCommandArguments>-i D:\Project\2020\NEW_ENFORCE\VS\Example\01_OneThrow\Example.ne</LocalDebuggerCommandArguments>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <LocalDebuggerCommandArguments>-i D:\Project\2020\NEW_ENFORCE\VS\New_Enforce_Solver\Test.ne</LocalDebuggerCommandArguments>
+    <LocalDebuggerCommandArguments>-i D:\Project\2020\NEW_ENFORCE\VS\Example\01_OneThrow\Example.ne</LocalDebuggerCommandArguments>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
 </Project>

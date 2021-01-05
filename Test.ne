@@ -39,24 +39,24 @@ CYLINDER	15	-25	295	8519	314.82715	15	15	1
 CYLINDER	16	25	345	8731	314.82715	16	16	1
 CYLINDER	17	-25	535	9669	314.82715	17	17	1
 CYLINDER	18	25	585	9881	314.82715	18	18	1
-PISTON	1	429.25094
-PISTON	2	429.25094
-PISTON	3	429.25094
-PISTON	4	429.25094
-PISTON	5	429.25094
-PISTON	6	429.25094
-PISTON	7	429.25094
-PISTON	8	429.25094
-PISTON	9	429.25094
-PISTON	10	429.25094
-PISTON	11	429.25094
-PISTON	12	429.25094
-PISTON	13	429.25094
-PISTON	14	429.25094
-PISTON	15	429.25094
-PISTON	16	429.25094
-PISTON	17	429.25094
-PISTON	18	429.25094
+PISTON	1	429.25094	540
+PISTON	2	429.25094	540
+PISTON	3	429.25094	540
+PISTON	4	429.25094	540
+PISTON	5	429.25094	540
+PISTON	6	429.25094	540
+PISTON	7	429.25094	540
+PISTON	8	429.25094	540
+PISTON	9	429.25094	540
+PISTON	10	429.25094	540
+PISTON	11	429.25094	540
+PISTON	12	429.25094	540
+PISTON	13	429.25094	540
+PISTON	14	429.25094	540
+PISTON	15	429.25094	540
+PISTON	16	429.25094	540
+PISTON	17	429.25094	540
+PISTON	18	429.25094	540
 CONROD	1	883.79	0.001	1462	341.93
 CONROD	2	883.79	0.001	1462	341.93
 CONROD	3	883.79	0.001	1462	341.93
@@ -85,119 +85,40 @@ MB	7	6900
 MB	8	8050
 MB	9	9200
 MB	10	10350
-WEB	1	1	0	251	115	770
-WEB	2	2	0	899	115	770
-WEB	3	3	120	1401	115	770
-WEB	4	4	120	2049	115	770
-WEB	5	5	200	2551	115	770
-WEB	6	6	200	3199	115	770
-WEB	7	7	240	3701	115	770
-WEB	8	8	240	4349	115	770
-WEB	9	9	80	4851	115	770
-WEB	10	10	80	5499	115	770
-WEB	11	11	280	6001	115	770
-WEB	12	12	280	6649	115	770
-WEB	13	13	320	7151	115	770
-WEB	14	14	320	7799	115	770
-WEB	15	15	40	8301	115	770
-WEB	16	16	40	8943	115	770
-WEB	17	17	160	9451	115	770
-WEB	18	18	160	10099	115	770
-CW	1	180	245.75	502.087	7439.88725
-CW	2	180	904.25	502.087	7439.88725
-CW	3	300	1395.75	502.087	7439.88725
-CW	4	300	2054.25	502.087	7439.88725
-CW	5	20	2545.75	502.087	7439.88725
-CW	6	20	3204.25	502.087	7439.88725
-CW	7	60	3695.75	502.087	7439.88725
-CW	8	60	4354.25	502.087	7439.88725
-CW	9	260	4845.75	502.087	7439.88725
-CW	10	260	5504.25	502.087	7439.88725
-CW	11	100	5995.75	502.087	7439.88725
-CW	12	100	6654.25	502.087	7439.88725
-CW	13	40	7145.75	502.087	7439.88725
-CW	14	40	7804.25	502.087	7439.88725
-CW	15	220	8295.75	502.087	7439.88725
-CW	16	220	8954.25	502.087	7439.88725
-CW	17	340	9445.75	502.087	7439.88725
-CW	18	340	10104.25	502.087	7439.88725
+WEB	1	1	251	115	770
+WEB	2	2	899	115	770
+WEB	3	3	1401	115	770
+WEB	4	4	2049	115	770
+WEB	5	5	2551	115	770
+WEB	6	6	3199	115	770
+WEB	7	7	3701	115	770
+WEB	8	8	4349	115	770
+WEB	9	9	4851	115	770
+WEB	10	10	5499	115	770
+WEB	11	11	6001	115	770
+WEB	12	12	6649	115	770
+WEB	13	13	7151	115	770
+WEB	14	14	7799	115	770
+WEB	15	15	8301	115	770
+WEB	16	16	8943	115	770
+WEB	17	17	9451	115	770
+WEB	18	18	10099	115	770
+CW	1	180	245.75	502.087	739.88725
+CW	2	180	904.25	502.087	739.88725
+CW	3	300	1395.75	502.087	739.88725
+CW	4	300	2054.25	502.087	739.88725
+CW	5	20	2545.75	502.087	739.88725
+CW	6	20	3204.25	502.087	739.88725
+CW	7	60	3695.75	502.087	739.88725
+CW	8	60	4354.25	502.087	739.88725
+CW	9	260	4845.75	502.087	739.88725
+CW	10	260	5504.25	502.087	739.88725
+CW	11	100	5995.75	502.087	739.88725
+CW	12	100	6654.25	502.087	739.88725
+CW	13	40	7145.75	502.087	739.88725
+CW	14	40	7804.25	502.087	739.88725
+CW	15	220	8295.75	502.087	739.88725
+CW	16	220	8954.25	502.087	739.88725
+CW	17	340	9445.75	502.087	739.88725
+CW	18	340	10104.25	502.087	739.88725
 PRESSURE	1	D:\Project\2020\NEW_ENFORCE\VS\New_Enforce_Solver\Pressure.txt
-
-clc
-clear all
-close all
-
-r = 250;
-R = 500;
-l = 500;
-L = 1000;
-
-rpm = 100;
-w = rpm * pi /30;
-
-th1 = transpose(linspace(0,360,361)) * pi / 180;
-x1 = r * cos(th1);
-y1 = r * sin(th1);
-
-th2 = asin((-R/L)*sin(th1));
-x2 = R * cos(th1) + l * cos(th2);
-y2 = R * sin(th1) + l * sin(th2);
-
-x3 = x2 + (L-l) * cos(th2);
-y3 = zeros(length(th1),1);
-th3 = zeros(length(th1),1);
-
-data = [x1 y1 180*th1/pi x2 y2 th2 x3 y3 th3];
-
-th1_dot = ones(length(th1),1) * w;
-x1_dot = -r * sin(th1) .* th1_dot;
-y1_dot = r * cos(th1) .* th1_dot;
-
-th2_dot = (-R/L) * cos(th1) .* th1_dot ./ cos(th2);
-x2_dot = -R*sin(th1).*th1_dot + (-l*sin(th2).*th2_dot);
-y2_dot = R*cos(th1) .*th1_dot + l*cos(th2).*th2_dot;
-
-x3_dot = x2_dot + (L-l)*(-sin(th2) .*th2_dot);
-y3_dot = zeros(length(th1),1);
-th3_dot = zeros(length(th1),1);
-
-data2 = [x1_dot y1_dot 180*th1/pi x2_dot y2_dot th2_dot x3_dot y3_dot th3_dot];
-
-th1_2dot = zeros(length(th1),1);
-x1_2dot = -r * cos(th1) .* th1_dot .* th1_dot;
-y1_2dot = -r * sin(th1) .* th1_dot .* th1_dot;
-
-th2_2dot = (sin(th2) .* th2_dot .* th2_dot + (-R/L) * (-sin(th1).*th1_dot.*th1_dot)) ./ cos(th2);
-x2_2dot = -R*cos(th1).*th1_dot.*th1_dot + (-l*sin(th2).*th2_2dot) + (-l*cos(th2).*th2_dot.*th2_dot);
-y2_2dot = -R*sin(th1) .*th1_dot.*th1_dot + (l*cos(th2).*th2_2dot) + (-l*sin(th2).*th2_dot.*th2_dot);
-
-x3_2dot = x2_2dot + (L-l) * (-cos(th2).*th2_dot.*th2_dot-sin(th2).*th2_2dot);
-y3_2dot = zeros(length(th1),1);
-th3_2dot = zeros(length(th1),1);
-
-data3 = [x1_2dot y1_2dot 180*th1/pi x2_2dot y2_2dot th2_2dot x3_2dot y3_2dot th3_2dot];
-
-
-% v = VideoWriter('Test.avi');
-% open(v);
-% 
-% for i=1:length(th1)
-%     plot(x1(i),y1(i),'ko')
-%     grid on
-%     hold on
-%     plot(x2(i),y2(i),'bo')
-%     plot(x3(i),y3(i),'ro')
-%     
-%     xlim([-30 30]);
-%     ylim([-20 30]);
-%     
-%     
-%     
-%     hold off
-% 
-%     frame = getframe(gcf);
-%     writeVideo(v,frame);
-% end
-% 
-% close(v);
-

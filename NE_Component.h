@@ -38,6 +38,7 @@ public:
 class NE_Piston : public NE_Component {
 private:
 	double _mass;
+	double _bore;
 	
 public:
 	NE_Piston() {
@@ -47,11 +48,12 @@ public:
 
 	}
 	// set functions
-	void set_mass(double mass) { _mass = mass; }	
-	void set_u(void) { }
-
+	void set_mass(double mass) { _mass = mass; }
+	void set_bore(double bore) { _bore = bore; }
+	
 	// get functions
 	double get_mass(void) { return _mass; }
+	double get_bore(void) { return _bore; }
 	
 	// virtual functions
 	void init(void);
@@ -95,6 +97,9 @@ class NE_MB : public NE_Component {
 private:
 	double _axpos;
 
+	vector<double> _Fy;
+	vector<double> _Fz;
+
 public:
 	NE_MB() {
 		init();
@@ -104,9 +109,12 @@ public:
 	}
 	// set functions
 	void set_axpos(double axpos) { _axpos = axpos; }
-	
+	void set_force(int n);
+
 	// get functions
 	double get_axpos(void) { return _axpos; }
+	vector<double>& get_Fy(void) { return _Fy; }
+	vector<double>& get_Fz(void) { return _Fz; }
 
 	// virtual functions
 	void init(void);
@@ -188,6 +196,8 @@ private:
 	vector<double> _nangle;
 	vector<double> _npressure;
 
+	bool _reset_flag;
+
 public:
 	NE_Pressure() {
 		init();
@@ -198,6 +208,7 @@ public:
 	// set functions
 	void set_path(string path) { _path = path; }
 	void set(void);
+	void reset(int n, double angle_step);
 
 	// get functions
 	string get_path(void) { return _path; }
@@ -205,7 +216,10 @@ public:
 	vector<double>& get_pressure(void) { return _pressure; }
 	vector<double>& get_nangle(void) { return _nangle; }
 	vector<double>& get_npressure(void) { return _npressure; }
-
+	vector<double>& get_angle(double w) { if (w >= 0.) return _angle; else return _nangle; }
+	vector<double>& get_pressure(double w) { if (w >= 0.) return _pressure; else return _npressure; }
+	bool get_reset_flag(void) { return _reset_flag; }
+	
 	// virtual functions
 	void init(void);
 
@@ -213,7 +227,7 @@ public:
 };
 
 class NE_Parameters : public NE_Component {
-private:
+private:	
 	double _rpm;
 	double _ang_step;
 	string _type;
@@ -345,7 +359,7 @@ public:
 
 	// non-virtual functions	
 	void calculate(NE_Parameters& param);
-	void calculate_(NE_Cylinder& cyl, double throw_angle, int n, double m1, double r, double w);
+	void calculate_(NE_Cylinder& cyl, double angle_step, int n, double m1, double r, double w, vector<double>& S_MB_Fy, vector<double>& S_MB_Fz);
 	void add_mb(NE_MB* mb) { _mb_list.push_back(mb); }
 	void add_web(NE_Web* web) { _web_list.push_back(web); }
 	void add_cw(NE_CW* cw) { _cw_list.push_back(cw); }

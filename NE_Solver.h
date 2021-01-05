@@ -33,15 +33,22 @@ private:
 	vector<NE_Pressure*> _press_list;
 	vector<NE_Parameters*> _param_list;
 
+	string _path;
+	string _fname;
+
 public:
 	NE_Solver() {
 		_input_reader = NULL;
 		_dom = NULL;
+		_path = "";
+		_fname = "";
 	}
 	~NE_Solver() {
 
 	}
 	// set functions
+	void set_path(string path) { _path = path; }
+	void set_file_name(string fname) { _fname = fname; }
 	void set(string inp);	
 
 	// get functions
@@ -56,6 +63,8 @@ public:
 	vector<NE_CW*>& get_cw_list(void) { return _cw_list; }
 	vector<NE_Pressure*>& get_pressure_list(void) { return _press_list; }
 	vector<NE_Parameters*>& get_parameters_list(void) { return _param_list; }
+	string get_path(void) { return _path; }
+	string get_file_name(void) { return _fname; }
 
 	// non-virtual functions
 	void run(void);

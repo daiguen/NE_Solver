@@ -74,8 +74,8 @@ void NE_Input_Reader::read_(NE_Solver& solver, vector<string>& str_vec) {
 		ne_throw->set_web_id(stoi(str_vec[5]), stoi(str_vec[6]));
 		ne_throw->set_cw_id(stoi(str_vec[7]), stoi(str_vec[8]));
 		int n = int(str_vec.size());
-		for (int i = 8; i < n; i++) {
-			ne_throw->set_cyl_id(i);
+		for (int i = 9; i < n; i++) {
+			ne_throw->set_cyl_id(stoi(str_vec[i]));
 		}
 		solver.add_throw(ne_throw);
 	}
@@ -95,6 +95,7 @@ void NE_Input_Reader::read_(NE_Solver& solver, vector<string>& str_vec) {
 		NE_Piston* ne_piston = new NE_Piston;
 		ne_piston->set_id(stoi(str_vec[1]));
 		ne_piston->set_mass(stod(str_vec[2]));
+		ne_piston->set_bore(stod(str_vec[3]));
 		solver.add_piston(ne_piston);
 	}
 	else if (key == "CONROD") {
