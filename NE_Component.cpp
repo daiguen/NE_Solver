@@ -288,10 +288,10 @@ void NE_Throw::calculate(NE_Parameters& param) {
 	double w = param.get_rpm() * M_PI / 30;
 	double angle_step = param.get_angle_step();
 	int n = 0;
-	if (param.get_type() == "2-stroke") {
+	if (param.get_type() == "2") {
 		n = int(360 / angle_step);
 	}
-	else if (param.get_type() == "4-stroke") {
+	else if (param.get_type() == "4") {
 		n = int(720 / angle_step);
 	}
 	else {
@@ -335,24 +335,23 @@ void NE_Throw::calculate(NE_Parameters& param) {
 	vector<double>& MB_Fz1 = mb_list[0]->get_Fz();
 	vector<double>& MB_Fy2 = mb_list[1]->get_Fy();
 	vector<double>& MB_Fz2 = mb_list[1]->get_Fz();
-	int j = 0;
-	for (cyl_it = cyl_list.begin(); cyl_it != cyl_list.end(); cyl_it++) {								
-		if (j > 0) break;
-		calculate_((**cyl_it), angle_step, n, m1, r, w, S_MB_Fy, S_MB_Fz);
+	int cyl_num = int(cyl_list.size());	
+	for (cyl_it = cyl_list.begin(); cyl_it != cyl_list.end(); cyl_it++) {												
+		calculate_((**cyl_it), angle_step, n, m1, r, w, S_MB_Fy, S_MB_Fz, cyl_num);
 		cyl_axpos = (**cyl_it).get_axpos();
-		r1 = abs(mb2_axpos - cyl_axpos) / abs(mb1_axpos - mb2_axpos);
-		r1 = 1;
+		r1 = abs(mb2_axpos - cyl_axpos) / abs(mb1_axpos - mb2_axpos);		
 		for (int i = 0; i < n; i++) {
 			MB_Fy1[i] += r1 * S_MB_Fy[i];
 			MB_Fy2[i] += (1-r1) * S_MB_Fy[i];
 			MB_Fz1[i] += r1 * S_MB_Fz[i];
 			MB_Fz2[i] += (1 - r1) * S_MB_Fz[i];
 		}		
-		j++;
+		S_MB_Fy.clear();
+		S_MB_Fz.clear();
 	}	
 }
 
-void NE_Throw::calculate_(NE_Cylinder& cyl, double angle_step, int n, double m1, double r, double w, vector<double>& S_MB_Fy, vector<double>& S_MB_Fz) {
+void NE_Throw::calculate_(NE_Cylinder& cyl, double angle_step, int n, double m1, double r, double w, vector<double>& S_MB_Fy, vector<double>& S_MB_Fz, int cyl_num) {
 	double th1, y1, z1, th2, y2, z2, th3, y3, z3;
 	double th1_dot, y1_dot, z1_dot, th2_dot, y2_dot, z2_dot, th3_dot, y3_dot, z3_dot;
 	double th1_2dot, y1_2dot, z1_2dot, th2_2dot, y2_2dot, z2_2dot, th3_2dot, y3_2dot, z3_2dot;
@@ -427,16 +426,26 @@ void NE_Throw::calculate_(NE_Cylinder& cyl, double angle_step, int n, double m1,
 		Fz3 = (i2 * th2_2dot + b21 * Fy2 - b23 * Fy3 + a21 * m2 * g * sin(bank_angle) - a21 * m2 * z2_2dot ) / (a21 - a23);
 		Fz2 = Fz3 + m2 * z2_2dot - m2 * g * sin(bank_angle);
 
-		Fy1 = m1 * y1_2dot + Fy2 + m1 * g * cos(bank_angle);
-		Fz1 = m1 * z1_2dot + Fz2 - m1 * g * sin(bank_angle);
+		//Fy1 = Fy2;
+		//Fz1 = Fz2;
+		double ratio(0.);
+		if (cyl_num == 0) {
 
+		}
+		else {
+			ratio = 1. / cyl_num;
+		}
+
+		Fy1 = ratio * m1 * y1_2dot + Fy2 + ratio * m1 * g * cos(bank_angle);
+		Fz1 = ratio * m1 * z1_2dot + Fz2 - ratio * m1 * g * sin(bank_angle);
+	
 		// Transformation by bank angle
-		T_Fy1 = cos(bank_angle)* Fy1 + sin(bank_angle) * Fz1;
-		T_Fz1 = -sin(bank_angle) * Fy1 + cos(bank_angle) * Fz1;
-		T_Fy2 = cos(bank_angle) * Fy2 + sin(bank_angle) * Fz2;
-		T_Fz2 = -sin(bank_angle) * Fy2 + cos(bank_angle) * Fz2;
-		T_Fy3 = cos(bank_angle) * Fy3 + sin(bank_angle) * Fz3;
-		T_Fz3 = -sin(bank_angle) * Fy3 + cos(bank_angle) * Fz3;
+		T_Fy1 = cos(bank_angle)* Fy1 - sin(bank_angle) * Fz1;
+		T_Fz1 = sin(bank_angle) * Fy1 + cos(bank_angle) * Fz1;
+		T_Fy2 = cos(bank_angle) * Fy2 - sin(bank_angle) * Fz2;
+		T_Fz2 = sin(bank_angle) * Fy2 + cos(bank_angle) * Fz2;
+		T_Fy3 = cos(bank_angle) * Fy3 - sin(bank_angle) * Fz3;
+		T_Fz3 = sin(bank_angle) * Fy3 + cos(bank_angle) * Fz3;
 
 		// Save
 		T_Fy1 = -T_Fy1 * 0.000000001;
@@ -450,7 +459,7 @@ void NE_Throw::calculate_(NE_Cylinder& cyl, double angle_step, int n, double m1,
 	double firing_angle = cyl.get_firing_angle();
 	double shift_angle = abs(firing_angle);
 	idx = n - int(shift_angle / angle_step);
-	
+
 	S_MB_Fy.insert(S_MB_Fy.end(), MB_Fy.begin() + idx, MB_Fy.end());
 	S_MB_Fz.insert(S_MB_Fz.end(), MB_Fz.begin() + idx, MB_Fz.end());
 	if (idx != 0) {

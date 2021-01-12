@@ -359,7 +359,7 @@ public:
 
 	// non-virtual functions	
 	void calculate(NE_Parameters& param);
-	void calculate_(NE_Cylinder& cyl, double angle_step, int n, double m1, double r, double w, vector<double>& S_MB_Fy, vector<double>& S_MB_Fz);
+	void calculate_(NE_Cylinder& cyl, double angle_step, int n, double m1, double r, double w, vector<double>& S_MB_Fy, vector<double>& S_MB_Fz, int cyl_num);
 	void add_mb(NE_MB* mb) { _mb_list.push_back(mb); }
 	void add_web(NE_Web* web) { _web_list.push_back(web); }
 	void add_cw(NE_CW* cw) { _cw_list.push_back(cw); }
