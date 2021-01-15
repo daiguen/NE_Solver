@@ -48,6 +48,9 @@ void NE_Input_Reader::read(NE_Solver& solver) {
 
 void NE_Input_Reader::read_(NE_Solver& solver, vector<string>& str_vec) {
 	string key = str_vec[0];	
+	string id = str_vec[1];
+
+	if (id == "0") return;
 	
 	if (key == "DOMAIN") {
 		NE_Domain& dom = solver.get_domain();

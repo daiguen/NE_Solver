@@ -288,10 +288,10 @@ void NE_Throw::calculate(NE_Parameters& param) {
 	double w = param.get_rpm() * M_PI / 30;
 	double angle_step = param.get_angle_step();
 	int n = 0;
-	if (param.get_type() == "2") {
+	if (param.get_type() == "2" || param.get_type() == "2-stroke") {
 		n = int(360 / angle_step);
 	}
-	else if (param.get_type() == "4") {
+	else if (param.get_type() == "4" || param.get_type() == "4-stroke") {
 		n = int(720 / angle_step);
 	}
 	else {

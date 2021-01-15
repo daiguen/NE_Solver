@@ -1,0 +1,10 @@
+﻿  main.cpp
+  NE_Component.cpp
+  NE_Domain.cpp
+  NE_Input_Reader.cpp
+  NE_Solver.cpp
+  Generating code
+  Previous IPDB not found, fall back to full compilation.
+  All 1098 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  Finished generating code
+  New_Enforce_Solver.vcxproj -> D:\Project\2020\NEW_ENFORCE\VS\New_Enforce_Solver\x64\Release\New_Enforce_Solver.exe
